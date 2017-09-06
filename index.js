@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 //end body-parser configuration
 
 //create app server
-var server = app.listen(3005,  "127.0.0.1", function () {
+var server = app.listen(3005,   function () {
 
   var host = server.address().address
   var port = server.address().port
@@ -40,61 +40,5 @@ app.get('/customer', function (req, res) {
    connection.query('select * from karnataka', function (error, results, fields) {
 	  if (error) throw error;
 	  res.end(JSON.stringify(results));
-	});
-});
-//rest api to get a single customer data
-app.get('/customer/find/:id', function (req, res) {
-   connection.query('select * from customer where Id=?', [req.params.id], function (error, results, fields) {
-	  if (error) throw error;
-	  res.end(JSON.stringify(results));
-	});
-});
-app.get('/select', function (req, res) {
-   connection.query('select * from addnewdevice', function (error, results, fields) {
-    if (error) throw error;
-    res.end(JSON.stringify(results));
-  });
-});
-//rest api t add elements
-app.post('/add', function (req, res) {
-   var params  = req.body;
-   console.log(params);
-   connection.query('INSERT INTO addnewdevice SET ?', params, function (error, results, fields) {
-    if (error) throw error;
-    res.end(JSON.stringify(results));
-  });
-});
-//rest api to create a new customer record into mysql database
-app.post('/addnewdevice', function (req, res) {
-   var params  = req.body;
-   console.log(params);
-   connection.query('INSERT INTO addnewdevice SET ?', params, function (error, results, fields) {
-	  if (error) throw error;
-	  res.end(JSON.stringify(results));
-	});
-});
-//rest api create a new add device record into mysql database
-app.post('/customer', function (req, res) {
-   var params  = req.body;
-   console.log(params);
-   connection.query('INSERT INTO customer SET ?', params, function (error, results, fields) {
-    if (error) throw error;
-    res.end(JSON.stringify(results));
-  });
-});
-//rest api to update record into mysql database
-app.put('/customer/find/:id', function (req, res) {
-   connection.query('UPDATE `customer` SET `Name`=?,`Address`=?,`Country`=?,`Phone`=? where `Id`=?', [req.body.Name,req.body.Address, req.body.Country, req.body.Phone, req.body.Id], function (error, results, fields) {
-	  if (error) throw error;
-	  res.end(JSON.stringify(results));
-	});
-});
-
-//rest api to delete record from mysql database
-app.delete('/customer/delete/:id', function (req, res) {
-   console.log(req.body);
-   connection.query('DELETE FROM `customer` WHERE `Id`=?', [req.body.Id], function (error, results, fields) {
-	  if (error) throw error;
-	  res.end('Record has been deleted!');
 	});
 });
